@@ -1,0 +1,48 @@
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build & Logs
+dist/
+build/
+.next/
+out/
+*.log
+logs/
+npm-debug.log*
+
+# IDE & OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# AIOS Local/Generated
+.aios-core/local/
+.claude/settings.local.json
+.aios/install-log.txt
+.aios/project-status.yaml
+.aios/environment-report.yaml
+.aios/environment-report.json
+
+# Synapse session files
+.synapse/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
