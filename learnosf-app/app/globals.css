@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FAFAF9;
+  --foreground: #1c1917;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Custom scrollbar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #d4d4d0;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: #a8a29e;
+}
+
+/* Markdown prose styles for assistant messages */
+.prose-learnosf {
+  @apply text-stone-800 leading-relaxed;
+}
+
+.prose-learnosf h1,
+.prose-learnosf h2,
+.prose-learnosf h3 {
+  @apply font-semibold text-stone-900 mt-4 mb-2;
+}
+
+.prose-learnosf h1 { @apply text-xl; }
+.prose-learnosf h2 { @apply text-lg; }
+.prose-learnosf h3 { @apply text-base; }
+
+.prose-learnosf p {
+  @apply mb-3;
+}
+
+.prose-learnosf ul {
+  @apply list-disc list-inside mb-3 space-y-1;
+}
+
+.prose-learnosf ol {
+  @apply list-decimal list-inside mb-3 space-y-1;
+}
+
+.prose-learnosf li {
+  @apply text-stone-700;
+}
+
+.prose-learnosf table {
+  @apply w-full border-collapse mb-4 text-sm;
+}
+
+.prose-learnosf th {
+  @apply bg-emerald-50 text-emerald-800 font-semibold px-3 py-2 text-left border border-emerald-200;
+}
+
+.prose-learnosf td {
+  @apply px-3 py-2 border border-stone-200;
+}
+
+.prose-learnosf tr:nth-child(even) td {
+  @apply bg-stone-50;
+}
+
+.prose-learnosf strong {
+  @apply font-semibold text-stone-900;
+}
+
+.prose-learnosf em {
+  @apply italic;
+}
+
+.prose-learnosf code {
+  @apply bg-stone-100 text-emerald-700 px-1 py-0.5 rounded text-sm font-mono;
+}
+
+.prose-learnosf blockquote {
+  @apply border-l-4 border-emerald-300 pl-4 italic text-stone-600 my-3;
+}
+
+.prose-learnosf hr {
+  @apply border-stone-200 my-4;
+}
+
+/* Checkbox list items */
+.prose-learnosf li input[type="checkbox"] {
+  @apply mr-2;
+}
