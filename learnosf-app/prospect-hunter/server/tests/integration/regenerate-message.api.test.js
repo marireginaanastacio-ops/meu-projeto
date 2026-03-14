@@ -13,6 +13,7 @@ vi.mock('../../src/services/lead.service.js', () => ({
 
 vi.mock('../../src/services/gemini.service.js', () => ({
   generateMessage: vi.fn(),
+  generateCustomMessage: vi.fn(),
   buildPrompt: vi.fn(),
 }));
 

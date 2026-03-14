@@ -1,5 +1,5 @@
 import { getById, update } from '../services/lead.service.js';
-import { generateMessage } from '../services/gemini.service.js';
+import { generateMessage, generateCustomMessage } from '../services/gemini.service.js';
 import { getPromptTemplate } from '../services/config.service.js';
 
 const MAX_HISTORY = 10;
@@ -8,7 +8,13 @@ export async function regenerateMessageHandler(req, res, next) {
   const { id } = req.params;
   const { customPrompt } = req.body || {};
 
-  const lead = await getById(id);
+  let lead;
+  try {
+    lead = await getById(id);
+  } catch (err) {
+    return next(err);
+  }
+
   if (!lead) {
     return res.status(404).json({ success: false, error: 'Lead não encontrado', code: 'NOT_FOUND' });
   }
@@ -16,7 +22,12 @@ export async function regenerateMessageHandler(req, res, next) {
   // Salva a mensagem anterior no histórico antes de gerar nova
   let messageHistory = Array.isArray(lead.message_history) ? [...lead.message_history] : [];
   if (lead.message) {
-    const config = await getPromptTemplate();
+    let config;
+    try {
+      config = await getPromptTemplate();
+    } catch (err) {
+      return next(err);
+    }
     messageHistory.push({
       content: lead.message,
       generated_at: lead.updated_at || new Date().toISOString(),
@@ -31,21 +42,7 @@ export async function regenerateMessageHandler(req, res, next) {
   let message;
   try {
     if (customPrompt) {
-      // Usa customPrompt diretamente (bypass do template padrão)
-      const { GoogleGenerativeAI } = await import('@google/generative-ai');
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({
-        model: 'gemini-1.5-flash',
-        generationConfig: { maxOutputTokens: 256 },
-      });
-      const timeoutMs = 8000;
-      const result = await Promise.race([
-        model.generateContent(customPrompt),
-        new Promise((_, reject) =>
-          setTimeout(() => reject(Object.assign(new Error('Gemini timeout'), { code: 'GEMINI_TIMEOUT' })), timeoutMs)
-        ),
-      ]);
-      message = result.response.text();
+      message = await generateCustomMessage(customPrompt);
     } else {
       message = await generateMessage(lead);
     }
@@ -58,15 +55,18 @@ export async function regenerateMessageHandler(req, res, next) {
   }
 
   // Só persiste após obter resposta bem-sucedida
-  const now = new Date().toISOString();
-  const updatedLead = await update(id, {
-    message,
-    message_history: messageHistory,
-    updated_at: now,
-  });
-
-  return res.json({
-    success: true,
-    data: { id: updatedLead.id, message: updatedLead.message },
-  });
+  try {
+    const now = new Date().toISOString();
+    const updatedLead = await update(id, {
+      message,
+      message_history: messageHistory,
+      updated_at: now,
+    });
+    return res.json({
+      success: true,
+      data: { id: updatedLead.id, message: updatedLead.message },
+    });
+  } catch (err) {
+    return next(err);
+  }
 }

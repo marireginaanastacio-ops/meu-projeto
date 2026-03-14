@@ -1,12 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { JsonStore } from '../utils/json-store.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const CONFIG_PATH = path.resolve(__dirname, '../../../..', 'data/config.json');
-
-const configStore = new JsonStore(CONFIG_PATH);
+import { configStore } from './config.service.js';
 
 function initModel() {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -52,6 +45,11 @@ async function callGeminiWithTimeout(model, prompt, timeoutMs = 8000) {
   const callPromise = model.generateContent(prompt);
   const result = await Promise.race([callPromise, timeoutPromise]);
   return result.response.text();
+}
+
+export async function generateCustomMessage(customPrompt) {
+  const model = initModel();
+  return callGeminiWithTimeout(model, customPrompt);
 }
 
 export async function generateMessage(lead) {
