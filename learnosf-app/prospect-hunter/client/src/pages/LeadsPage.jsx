@@ -1,11 +1,24 @@
+import { useState } from 'react';
 import { useLeads } from '../hooks/useLeads';
 import { useSearch } from '../hooks/useSearch';
 import { LeadList } from '../components/leads/LeadList';
 import { LeadFilters } from '../components/leads/LeadFilters';
+import { LeadDetail } from '../components/leads/LeadDetail';
 
 export function LeadsPage() {
-  const { leads, loading, error, total, refetch } = useLeads();
+  const { leads, loading, error, total, refetch, updateLeadInList, removeLeadFromList } = useLeads();
   const { filters, setFilter, clearFilters, hasActiveFilters } = useSearch(refetch);
+  const [selectedLead, setSelectedLead] = useState(null);
+
+  const handleLeadUpdate = (updatedLead) => {
+    updateLeadInList(updatedLead);
+    setSelectedLead(updatedLead);
+  };
+
+  const handleLeadDelete = (id) => {
+    removeLeadFromList(id);
+    setSelectedLead(null);
+  };
 
   return (
     <main className="p-6">
@@ -33,7 +46,16 @@ export function LeadsPage() {
         </div>
       )}
 
-      <LeadList leads={leads} loading={loading} />
+      <LeadList leads={leads} loading={loading} onLeadClick={setSelectedLead} />
+
+      <LeadDetail
+        key={selectedLead?.id}
+        lead={selectedLead}
+        isOpen={!!selectedLead}
+        onClose={() => setSelectedLead(null)}
+        onUpdate={handleLeadUpdate}
+        onDelete={handleLeadDelete}
+      />
     </main>
   );
 }
