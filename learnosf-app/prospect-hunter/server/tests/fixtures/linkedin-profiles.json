@@ -1,0 +1,20 @@
+[
+  {
+    "firstName": "Ana",
+    "lastName": "Oliveira",
+    "headline": "Facilitadora de aprendizagem",
+    "summary": "Especialista em design instrucional e educação corporativa com 10 anos de experiência.",
+    "connectionsCount": 856,
+    "profileUrl": "https://linkedin.com/in/ana-oliveira",
+    "location": "Rio de Janeiro, Brasil"
+  },
+  {
+    "firstName": "Carlos",
+    "lastName": "Mendes",
+    "headline": "Treinador corporativo",
+    "summary": null,
+    "connectionsCount": null,
+    "profileUrl": "https://linkedin.com/in/carlos-mendes",
+    "location": null
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "username": "coach_maria",
+    "fullName": "Maria Silva",
+    "biography": "Coach de carreira | Ajudo profissionais a encontrarem seu propósito",
+    "followersCount": 12500,
+    "profilePicUrl": "https://example.com/pics/maria.jpg",
+    "url": "https://instagram.com/coach_maria",
+    "city": "São Paulo"
+  },
+  {
+    "username": "prof_joao",
+    "fullName": "João Santos",
+    "biography": "Professor universitário | Metodologias ativas",
+    "followersCount": 3200,
+    "profilePicUrl": null,
+    "url": "https://instagram.com/prof_joao",
+    "city": null
+  }
+]

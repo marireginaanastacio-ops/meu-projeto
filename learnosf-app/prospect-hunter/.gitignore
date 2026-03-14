@@ -1,0 +1,18 @@
+node_modules/
+.env
+
+# Dados locais (não commitar)
+data/leads.json
+data/config.json
+
+# Build artifacts
+client/dist/
+client/.vite/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
