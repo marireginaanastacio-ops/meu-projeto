@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import { LeadsPage } from './pages/LeadsPage';
+import { DashboardPage } from './pages/DashboardPage';
 
 function Layout({ children }) {
   return (
@@ -10,8 +11,21 @@ function Layout({ children }) {
           <nav className="flex gap-4" aria-label="Navegação principal">
             <NavLink
               to="/"
+              end
               className={({ isActive }) =>
-                `text-sm font-medium transition-colors ${isActive ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'}`
+                `text-sm font-medium transition-colors ${
+                  isActive ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'
+                }`
+              }
+            >
+              Dashboard
+            </NavLink>
+            <NavLink
+              to="/leads"
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors ${
+                  isActive ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'
+                }`
               }
             >
               Leads
@@ -29,7 +43,8 @@ export default function App() {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<LeadsPage />} />
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/leads" element={<LeadsPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
