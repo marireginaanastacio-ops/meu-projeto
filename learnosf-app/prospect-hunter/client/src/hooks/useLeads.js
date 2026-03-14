@@ -21,9 +21,18 @@ export function useLeads(initialParams = {}) {
     }
   }, []);
 
+  const updateLeadInList = useCallback((updatedLead) => {
+    setLeads((prev) => prev.map((l) => l.id === updatedLead.id ? updatedLead : l));
+  }, []);
+
+  const removeLeadFromList = useCallback((id) => {
+    setLeads((prev) => prev.filter((l) => l.id !== id));
+    setTotal((prev) => Math.max(0, prev - 1));
+  }, []);
+
   useEffect(() => {
     fetchLeads(initialParams);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return { leads, loading, error, total, refetch: fetchLeads };
+  return { leads, loading, error, total, refetch: fetchLeads, updateLeadInList, removeLeadFromList };
 }
